@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: squirtle
+  labels:
+    app.kubernetes.io/name: squirtle
+
+spec:
+  containers:
+  - name: squirtle
+    image: jin/fast-api
+    imagePullPolicy: Never
+    ports:
+    - containerPort: 8000
