@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jin-b
+  labels:
+    run: jin-b
+spec:
+  type: LoadBalancer     # 서비스 타입
+  ports:
+  - port: 9090       # 서비스 포트
+    targetPort: 8000   # 타켓, 즉 pod의 포트
+    protocol: TCP
+    name: http
+  selector:
+    app: jin-b

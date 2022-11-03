@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jin-b-deployment
+  labels:
+    app: jin-b
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jin-b
+  template:
+    metadata:
+      labels:
+        app: jin-b
+    spec:
+      containers:
+      - name: jin-b
+        image: jin/fast-api
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
