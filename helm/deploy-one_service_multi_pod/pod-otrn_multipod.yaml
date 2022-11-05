@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: otran
+  labels:
+    app.kubernetes.io/name: otran
+
+spec:
+  containers:
+    - name: slowbro
+      image: jin/fast-api
+      imagePullPolicy: Never
+      ports:
+        - containerPort: 8080
+      command: [ 'uvicorn' ]
+      args: [ 'app.main:app',  '--port=8080', '--host=0.0.0.0']
+    - name: squirtle
+      image: jin/fast-api
+      imagePullPolicy: Never
+      ports:
+        - containerPort: 8081
+      command: [ 'uvicorn' ]
+      args: [ 'app.main:app',  '--port=8081', '--host=0.0.0.0']
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: otran
+  labels:
+    run: otran
+spec:
+  type: LoadBalancer     # 서비스 타입
+  ports:
+    - port: 8080       # 서비스 포트
+      targetPort: 8080   # 타켓, 즉 pod의 포트
+      protocol: TCP
+      name: slowbro-http
+    - port: 8081       # 서비스 포트
+      targetPort: 8081   # 타켓, 즉 pod의 포트
+      protocol: TCP
+      name: squirtle-http
+  selector:
+    app.kubernetes.io/name: otran

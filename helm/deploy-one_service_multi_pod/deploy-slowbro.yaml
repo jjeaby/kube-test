@@ -20,7 +20,8 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 8000
-
+          command: [ 'uvicorn' ]
+          args: [ 'app.main:app',  '--port=8080', '--host=0.0.0.0']
 ---
 
 apiVersion: v1
